@@ -1,0 +1,47 @@
+<style lang="less">
+</style>
+
+<script>
+import wepy from '@wepy/core'
+import eventHub from './common/eventHub'
+import vuex from '@wepy/x'
+
+
+wepy.use(vuex)
+
+wepy.app({
+  onLaunch() {
+  },
+  methods: {
+  }
+})
+</script>
+<config>
+{
+  pages: [
+    'pages/index',
+    'pages/user'
+  ],
+  window: {
+    backgroundTextStyle: 'light',
+    navigationBarBackgroundColor: '#fff',
+    navigationBarTitleText: 'WeChat',
+    navigationBarTextStyle: 'black'
+  },
+  tabBar: {
+    list: [{
+      pagePath: 'pages/index',
+      text: '首页',
+      iconPath: 'assets/images/index.png',
+      selectedIconPath: 'assets/images/index_selected.png'
+    }, {
+      pagePath: 'pages/user',
+      text: '我的',
+      iconPath: 'assets/images/user.png',
+      selectedIconPath: 'assets/images/user_selected.png'
+    }],
+    color: '#707070',
+    selectedColor: '#00b5ad'
+  }
+}
+</config>
