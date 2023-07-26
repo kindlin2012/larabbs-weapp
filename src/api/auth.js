@@ -33,6 +33,7 @@ export function getCaptcha(phone) {
   })
 }
 export function getVerificationCode(key, code) {
+  // console.log(key,code)
   return request('verificationCodes', {
     method: 'post',
     data: {
@@ -43,6 +44,7 @@ export function getVerificationCode(key, code) {
 }
 
 export function register(data) {
+  // console.log(data);
   return request('weapp/users', {
     method: 'post',
     data: data

@@ -17,7 +17,7 @@
     "checkInvalidKey": true,
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
-    "compileHotReLoad": false,
+    "compileHotReLoad": true,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
     "useApiHostProcess": true,
@@ -40,6 +40,6 @@
   "appid": "wxbead7b97f102457b",
   "projectname": "larabbs",
   "miniprogramRoot": "weapp/",
-  "libVersion": "2.33.0",
+  "libVersion": "3.0.0",
   "condition": {}
 }

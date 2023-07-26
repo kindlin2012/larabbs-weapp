@@ -32,50 +32,50 @@
     <div v-if="errors.phone" class="weui-cells__tips error-message">{{ errors.phone[0] }}</div>
 
     <!-- 短信验证码  -->
-    <div class="weui-cells__title" :class="{'weui-cell_warn': errors.verification_code}">短信验证码</div>
-    <div class="weui-cells weui-cells_after-title">
-      <div class="weui-cell weui-cell_input" :class="{'weui-cell_warn': errors.verification_code}">
-        <div class="weui-cell__bd">
-          <input class="weui-input" v-model="form.verification_code" placeholder="请输入短信验证码" name="verification_code" />
-        </div>
-        <div class="weui-cell__ft">
-          <icon v-if="errors.verification_code" type="warn" size="23" color="#E64340"></icon>
-        </div>
-      </div>
+<div class="weui-cells__title" :class="{'weui-cell_warn': errors.verification_code}">短信验证码</div>
+<div class="weui-cells weui-cells_after-title">
+  <div class="weui-cell weui-cell_input" :class="{'weui-cell_warn': errors.verification_code}">
+    <div class="weui-cell__bd">
+      <input class="weui-input" v-model="form.verification_code" placeholder="请输入短信验证码" name="verification_code" />
     </div>
-    <div v-if="errors.verification_code" class="weui-cells__tips error-message">{{ errors.verification_code[0] }}</div>
+    <div class="weui-cell__ft">
+      <icon v-if="errors.verification_code" type="warn" size="23" color="#E64340"></icon>
+    </div>
+  </div>
+</div>
+<div v-if="errors.verification_code" class="weui-cells__tips error-message">{{ errors.verification_code[0] }}</div>
 
-    <!-- 姓名 -->
-    <div class="weui-cells__title" :class="{'weui-cell_warn': errors.name}">姓名</div>
-    <div class="weui-cells weui-cells_after-title">
-      <div class="weui-cell weui-cell_input" :class="{'weui-cell_warn': errors.name}">
-        <div class="weui-cell__bd">
-          <input class="weui-input" placeholder="请输入姓名" name="name" v-model="form.name"/>
-        </div>
-        <div class="weui-cell__ft">
-          <icon v-if="errors.name" type="warn" size="23" color="#E64340"></icon>
-        </div>
-      </div>
+<!-- 姓名 -->
+<div class="weui-cells__title" :class="{'weui-cell_warn': errors.name}">姓名</div>
+<div class="weui-cells weui-cells_after-title">
+  <div class="weui-cell weui-cell_input" :class="{'weui-cell_warn': errors.name}">
+    <div class="weui-cell__bd">
+      <input class="weui-input" placeholder="请输入姓名" name="name" v-model="form.name"/>
     </div>
-    <div v-if="errors.name" class="weui-cells__tips error-message">{{ errors.name[0] }}</div>
+    <div class="weui-cell__ft">
+      <icon v-if="errors.name" type="warn" size="23" color="#E64340"></icon>
+    </div>
+  </div>
+</div>
+<div v-if="errors.name" class="weui-cells__tips error-message">{{ errors.name[0] }}</div>
 
-    <!-- 密码 -->
-    <div class="weui-cells__title" :class="{'weui-cell_warn': errors.password}">密码</div>
-    <div class="weui-cells weui-cells_after-title">
-      <div class="weui-cell weui-cell_input" :class="{'weui-cell_warn': errors.password}">
-        <div class="weui-cell__bd">
-          <input class="weui-input" v-model="form.password" placeholder="请输入密码" name="password" type="password"/>
-        </div>
-        <div class="weui-cell__ft">
-          <icon v-if="errors.password" type="warn" size="23" color="#E64340"></icon>
-        </div>
-      </div>
+<!-- 密码 -->
+<div class="weui-cells__title" :class="{'weui-cell_warn': errors.password}">密码</div>
+<div class="weui-cells weui-cells_after-title">
+  <div class="weui-cell weui-cell_input" :class="{'weui-cell_warn': errors.password}">
+    <div class="weui-cell__bd">
+      <input class="weui-input" v-model="form.password" placeholder="请输入密码" name="password" type="password"/>
     </div>
-    <div v-if="errors.password" class="weui-cells__tips error-message">{{ errors.password[0] }}</div>
+    <div class="weui-cell__ft">
+      <icon v-if="errors.password" type="warn" size="23" color="#E64340"></icon>
+    </div>
+  </div>
+</div>
+<div v-if="errors.password" class="weui-cells__tips error-message">{{ errors.password[0] }}</div>
 
-    <div class="weui-btn-area">
-      <button class="weui-btn" type="primary" @tap="submit">注册</button>
-    </div>
+<div class="weui-btn-area">
+  <button class="weui-btn" type="primary" @tap="submit">注册</button>
+</div>
 
     <!-- 验证码输入模态框 -->
     <modal class="modal" v-if="captchaModalShow" no-cancel bindconfirm="sendVerificationCode">
@@ -93,6 +93,7 @@
 
   </div>
 </div>
+
 </template>
 <config>
   {
@@ -102,18 +103,19 @@
 <script>
   import wepy from '@wepy/core'
   import store from '@/store'
-  import { getCaptcha, getVerificationCode } from '@/api/auth'
+  // import { getCaptcha } from '@/api/auth'
   import WeValidator from 'we-validator'
+  import { getCaptcha, getVerificationCode } from '@/api/auth'
 
   wepy.page({
     store,
     data: {
-	    // 表单
+      // 表单
       form: {
         phone: null,
       },
-	    // 图片验证值
-	    captchaValue: null,
+      // 图片验证值
+      captchaValue: null,
       // 手机号 input 是否 disabled
       phoneDisabled: false,
       // 图片验证码 modal 是否显示
@@ -146,7 +148,7 @@
           onMessage: (data) => {
             this.$set(this.errors, data.name, [data.msg])
           }
-        }),
+        })
         // 注册表单验证实例化
         this.validatorInstance = new WeValidator({
           multiCheck: true,
@@ -218,6 +220,7 @@
           }
         }
       },
+
       // 发送短信验证码
       async sendVerificationCode() {
         if (!this.captchaValue) {
@@ -233,9 +236,8 @@
         }
 
         try {
-          // console.log([this.captcha.key, this.captchaValue])
           let codeResponse = await getVerificationCode(this.captcha.key, this.captchaValue)
-          // console.log(codeResponse)
+
           // 记录 key 和 过期时间
           this.verificationCode = {
             key: codeResponse.data.key,
@@ -253,8 +255,9 @@
           this.getCaptchaCode()
         }
       },
+
       // 表单提交
-	    async submit() {
+      async submit() {
         // 提交之前清空错误信息
         this.errors = {}
         if (!this.validatorInstance.checkData(this.form)) {
@@ -283,8 +286,9 @@
         try {
           let formData = this.form
           formData.verification_key = this.verificationCode.key
-          console.log(formData)
+          // console.log(formData)
           await this.$store.dispatch('register', formData)
+          // console.log(response)
 
           wx.showToast({
             title: '注册成功',
@@ -294,7 +298,7 @@
           // 跳转到我的页面
           setTimeout(async () => {
             wx.switchTab({
-              url: '/pages/users/me'
+              url: '/pages/user'
             })
           }, 2000)
         } catch (err) {
@@ -309,6 +313,7 @@
           }
         }
       }
+
     }
   })
 </script>
