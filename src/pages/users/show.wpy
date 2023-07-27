@@ -74,7 +74,7 @@
     async onLoad(options) {
 
       const userResponse = await getUser(options.id)
-
+      console.log(userResponse)
       this.user = userResponse.data
 
       // 动态设置页面标题
