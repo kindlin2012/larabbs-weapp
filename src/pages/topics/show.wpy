@@ -78,6 +78,7 @@
             <div class="weui-cell__ft weui-cell__ft_in-access"></div>
           </a>
         </div>
+        <reply-create-link :topicId="topic.id"></reply-create-link>
       </div>
     </div>
   </div>
@@ -86,7 +87,8 @@
   {
     navigationBarTitleText: '话题详情',
     usingComponents: {
-      "datetime-diff": "~@/components/datetime-diff"
+      "datetime-diff": "~@/components/datetime-diff",
+      "reply-create-link": "~@/components/reply-create-link"
     }
   }
 </config>
@@ -155,6 +157,9 @@
     },
     onLoad(options) {
       this.loadTopic(options.id)
+      eventHub.$on('reply-created', (...args) => {
+        this.loadTopic(options.id)
+      });
     }
   })
 </script>
