@@ -94,9 +94,14 @@
   import { getTopics, getCategories } from '@/api/topic'
   import listRefresh from '@/mixins/list-refresh.js'
   import eventHub from '@/common/eventHub'
+  import store from '@/store'
+  import { mapGetters } from '@wepy/x'
+  import syncBadge from '@/mixins/sync-badge.js'
 
   wepy.page({
-    mixins: [ listRefresh ],
+    store,
+    // mixins: [ syncBadge ],
+    mixins: [ listRefresh,syncBadge ],
     data: {
       // 分类数据
       categories: [],
@@ -124,6 +129,7 @@
       })
     },
     computed: {
+      ...mapGetters([ 'unreadCount']),
       currentCategoryId() {
         return this.currentCategory.id || null
       },

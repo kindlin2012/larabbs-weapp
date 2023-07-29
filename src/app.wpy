@@ -15,19 +15,34 @@ wepy.use(vuex)
 wepy.use(promisify)
 
 wepy.app({
-  onLaunch() {
-    // wx.login({
-    //   success (res) {
-    //     console.log(res)
-    //   }
-    // })
-    wepy.wx.login().then(res => {
-      console.log('login: ', res)
-    })
+
+  // onLaunch() {
+  //   // wx.login({
+  //   //   success (res) {
+  //   //     console.log(res)
+  //   //   }
+  //   // })
+  //   wepy.wx.login().then(res => {
+  //     console.log('login: ', res)
+  //   })
+  // },
+  // methods: {
+  //   async testAsync(){
+
+  //   }
+  // }
+  store: require('./store').default,
+  async onLaunch() {
+    this.$store = this.$options.store;
+    this.updateUnreadCount()
+
+    setInterval(() => {
+      this.updateUnreadCount()
+    }, 60000)
   },
   methods: {
-    async testAsync(){
-
+    async updateUnreadCount() {
+      await this.$store.dispatch('updateUnreadCount')
     }
   }
 })
