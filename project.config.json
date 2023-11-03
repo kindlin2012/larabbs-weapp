@@ -41,5 +41,14 @@
   "projectname": "larabbs",
   "miniprogramRoot": "weapp/",
   "libVersion": "3.0.0",
-  "condition": {}
+  "condition": {},
+  "srcMiniprogramRoot": "weapp/",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  }
 }

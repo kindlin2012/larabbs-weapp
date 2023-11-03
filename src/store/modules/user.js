@@ -29,6 +29,7 @@ const actions = {
   async login ({ dispatch, commit }, params = {}) {
     const loginData = await wepy.wx.login()
     params.code = loginData.code
+    console.log('参数是:',params)
 
     const authResponse = await login(params)
 
@@ -99,6 +100,7 @@ const mutations = {
   }
 }
 
+// 导出默认的state，getters，actions，mutations
 export default {
   state,
   getters,

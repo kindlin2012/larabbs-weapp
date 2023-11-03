@@ -15,9 +15,9 @@
 
     <div class="weui-toptips weui-toptips_warn" v-if="errorMessage">{{ errorMessage }}</div>
 
-    <div class="weui-cells__title">Larabbs 手机注册</div>
+    <div class="weui-cells__title">Larabbs 小程序注册</div>
 
-    <div class="weui-cells__title {{ errors.phone ? 'weui-cell_warn' : ''}}">手机号</div>
+    <!-- <div class="weui-cells__title {{ errors.phone ? 'weui-cell_warn' : ''}}">手机号</div>
     <div class="weui-cells weui-cells_after-title">
       <div class="weui-cell  weui-cell_vcode {{ errors.phone ? 'weui-cell_warn' : ''}}">
         <div class="weui-cell__bd">
@@ -29,10 +29,10 @@
         </div>
       </div>
     </div>
-    <div v-if="errors.phone" class="weui-cells__tips error-message">{{ errors.phone[0] }}</div>
+    <div v-if="errors.phone" class="weui-cells__tips error-message">{{ errors.phone[0] }}</div> -->
 
     <!-- 短信验证码  -->
-    <div class="weui-cells__title" :class="{'weui-cell_warn': errors.verification_code}">短信验证码</div>
+    <!-- <div class="weui-cells__title" :class="{'weui-cell_warn': errors.verification_code}">短信验证码</div>
     <div class="weui-cells weui-cells_after-title">
       <div class="weui-cell weui-cell_input" :class="{'weui-cell_warn': errors.verification_code}">
         <div class="weui-cell__bd">
@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-    <div v-if="errors.verification_code" class="weui-cells__tips error-message">{{ errors.verification_code[0] }}</div>
+    <div v-if="errors.verification_code" class="weui-cells__tips error-message">{{ errors.verification_code[0] }}</div> -->
 
     <!-- 姓名 -->
     <div class="weui-cells__title" :class="{'weui-cell_warn': errors.name}">姓名</div>
@@ -78,7 +78,7 @@
     </div>
 
     <!-- 验证码输入模态框 -->
-    <modal class="modal" v-if="captchaModalShow" no-cancel bindconfirm="sendVerificationCode">
+    <!-- <modal class="modal" v-if="captchaModalShow" no-cancel bindconfirm="sendVerificationCode">
       <div v-if="errors.captchaValue" class="weui-cells__tips error-message">{{ errors.captchaValue[0] }}</div>
       <div class="weui-cell weui-cell_input weui-cell_vcode">
         <div class="weui-cell__bd">
@@ -89,7 +89,7 @@
           <div>{{captcha.content}}</div>
         </div>
       </div>
-    </modal>
+    </modal> -->
 
   </div>
 </div>
@@ -110,7 +110,7 @@
     data: {
 	    // 表单
       form: {
-        phone: null,
+        // phone: null,
       },
 	    // 图片验证值
 	    captchaValue: null,
@@ -130,53 +130,53 @@
     },
     methods: {
       initValidator(){
-        this.phoneValidatorInstance = new WeValidator({
-          rules: {
-            phone: {
-              required: true,
-              mobile: true
-            }
-          },
-          messages: {
-            phone: {
-              required: '请输入手机号',
-              mobile: '手机号格式不正确'
-            }
-          },
-          onMessage: (data) => {
-            this.$set(this.errors, data.name, [data.msg])
-          }
-        }),
+        // this.phoneValidatorInstance = new WeValidator({
+        //   rules: {
+        //     phone: {
+        //       required: true,
+        //       mobile: true
+        //     }
+        //   },
+        //   messages: {
+        //     phone: {
+        //       required: '请输入手机号',
+        //       mobile: '手机号格式不正确'
+        //     }
+        //   },
+        //   onMessage: (data) => {
+        //     this.$set(this.errors, data.name, [data.msg])
+        //   }
+        // }),
         // 注册表单验证实例化
         this.validatorInstance = new WeValidator({
           multiCheck: true,
           rules: {
-            phone: {
-              required: true,
-              mobile: true
-            },
+            // phone: {
+            //   required: true,
+            //   mobile: true
+            // },
             name: {
               required: true
             },
-            verification_code: {
-              required: true
-            },
+            // verification_code: {
+            //   required: true
+            // },
             password: {
               required: true,
               minlength: 6
             }
           },
           messages: {
-            phone: {
-              required: '请输入手机号',
-              mobile: '手机号格式不正确'
-            },
+            // phone: {
+            //   required: '请输入手机号',
+            //   mobile: '手机号格式不正确'
+            // },
             name: {
               required: '请输入姓名'
             },
-            verification_code: {
-              required: '请输入验证码'
-            },
+            // verification_code: {
+            //   required: '请输入验证码'
+            // },
             password: {
               required: '请填写密码',
               minlength: '密码最少 6 位数'
@@ -261,31 +261,32 @@
           return
         }
 
-        if (!this.verificationCode.key) {
-          wx.showToast({
-            title: '请发送验证码',
-            icon: 'none',
-            duration: 2000
-          })
-          return false
-        }
+        // if (!this.verificationCode.key) {
+        //   wx.showToast({
+        //     title: '请发送验证码',
+        //     icon: 'none',
+        //     duration: 2000
+        //   })
+        //   return false
+        // }
 
         // 检查验证码是否过期
-        if (new Date().getTime() > this.verificationCode.expiredAt) {
-          wx.showToast({
-            title: '验证码已过期',
-            icon: 'none',
-            duration: 2000
-          })
-          return false
-        }
+        // if (new Date().getTime() > this.verificationCode.expiredAt) {
+        //   wx.showToast({
+        //     title: '验证码已过期',
+        //     icon: 'none',
+        //     duration: 2000
+        //   })
+        //   return false
+        // }
 
         try {
           let formData = this.form
-          formData.verification_key = this.verificationCode.key
-          console.log(formData)
+          // formData.verification_key = this.verificationCode.key
+          // console.log(formData)
+          console.log('开始')
           await this.$store.dispatch('register', formData)
-
+          console.log('成功')
           wx.showToast({
             title: '注册成功',
             icon: 'success'
@@ -299,9 +300,9 @@
           }, 2000)
         } catch (err) {
           // 验证码错误
-          if (err.response.statusCode === 401) {
-            this.$set(this.errors, 'verification_code', ['验证码错误'])
-          }
+          // if (err.response.statusCode === 401) {
+          //   this.$set(this.errors, 'verification_code', ['验证码错误'])
+          // }
 
           // 表单错误
           if (err.response.statusCode === 422) {

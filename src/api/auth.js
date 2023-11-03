@@ -44,7 +44,8 @@ export function getVerificationCode(key, code) {
 }
 
 export function register(data) {
-  // console.log(data);
+  // console.log('数据是')
+  console.log(data);
   return request('weapp/users', {
     method: 'post',
     data: data

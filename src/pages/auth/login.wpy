@@ -18,7 +18,7 @@
               <div class="weui-label">用户名</div>
             </div>
             <div class="weui-cell__bd">
-              <input class="weui-input" placeholder="手机号或邮箱" v-model="form.username" />
+              <input class="weui-input" placeholder="手机号或用户名" v-model="form.username" />
             </div>
             <div v-if="errors.username" class="weui-cell__ft">
               <icon type="warn" size="23" color="#E64340"></icon>
