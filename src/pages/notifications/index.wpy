@@ -48,7 +48,7 @@
     import { getNotifications } from '@/api/notification'
     import store from '@/store'
     import { mapActions } from '@wepy/x';
-
+    
     wepy.page({
       store,
       mixins: [ listRefresh ],

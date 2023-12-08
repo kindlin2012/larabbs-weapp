@@ -38,7 +38,13 @@
             </div>
           </div>
         </div>
-
+        <!-- 创建发送私信链接 -->
+        <a class="weui-cell weui-cell_access" url="/pages/messages/create?id={{ user.id }}">
+          <div class="weui-cell__bd">
+            <div class="weui-cell__bd">给Ta 发送私信</div>
+          </div>
+          <div class="weui-cell__ft weui-cell__ft_in-access"></div>
+        </a>
         <a class="weui-cell weui-cell_access" url="/pages/topics/user-index?id={{ user.id }}">
           <div class="weui-cell__bd">
             <div class="weui-cell__bd">Ta 的话题</div>

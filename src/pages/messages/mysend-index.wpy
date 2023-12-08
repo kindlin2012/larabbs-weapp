@@ -1,0 +1,64 @@
+<template>
+        <div class="page__bd">
+          <message-list :messages="resourceData" :noMoreData="noMoreData"></message-list>
+        </div>
+        <!-- <list-refresh-component :fetchData="fetchData"> -->
+        <!-- <list-refresh-component>
+          <message-list :messages="resourceData" :noMoreData="noMoreData"></message-list>
+        </list-refresh-component> -->
+</template>
+<config>
+  {
+    "navigationBarTitleText": "我发送的私信",
+    "enablePullDownRefresh": true,
+    usingComponents: {
+      "message-list": "~@/components/message-list",
+      <!-- "list-refresh-component": "~@/components/list-refresh-component", -->
+
+    }
+
+
+  }
+</config>
+<script>
+import wepy from '@wepy/core';
+import { getCurUserSend } from '@/api/message';
+import listRefresh from '@/mixins/list-refresh.js';
+import eventHub from '@/common/eventHub'
+// import ListRefreshComponent from '@/components/list-refresh-component';
+
+wepy.page({
+  mixins: [ listRefresh ],
+  // components: {
+  //   'list-refresh-component': ListRefreshComponent
+  // },
+  data: {
+    // 话题数据
+    // messages: [],
+    // // 当前分页
+    // page: 1,
+    // // 是否还有更多数据
+    // noMoreData: false,
+    // // 是否在加载中
+    // isLoading: false
+  },
+  async onLoad() {
+    // this.loadMessages();
+    this.loadData();
+    eventHub.$on('message-deleted', (message) => {
+      this.page = 1
+      this.noMoreData = false
+      this.loadData(true)
+    })
+  },
+  methods: {
+    async fetchData() {
+      let params = {
+        page: this.page,
+        include: 'sender,receiver'
+      };
+      return getCurUserSend(params);
+    }
+  }
+});
+</script>

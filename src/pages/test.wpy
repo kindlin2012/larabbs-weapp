@@ -1,0 +1,56 @@
+<style lang="less">
+</style>
+<template>
+<div class="weui-cells">
+  <div class="weui-cell">
+    <div class="weui-cell__bd">
+      <p>登录用户</p>
+    </div>
+  </div>
+  <div class="weui-cell">
+    <div class="weui-cell__bd" v-if="isLoggedIn" style="padding-left: 20px;">
+      <p>登录用户名: {{user.name}} </p>
+    </div>
+    <!-- v-else语句        -->
+    <div class="weui-cell__bd" v-else style="padding-left: 20px;">
+      <p>未登录</p>
+    </div>
+  </div>
+  <div class="weui-cell">
+    <div class="weui-cell__bd"  style="padding-left: 20px;">
+      <p>子类目2</p>
+    </div>
+  </div>
+  <div class="weui-cell">
+    <div class="weui-cell__bd">
+      <p>类目2</p>
+    </div>
+  </div>
+</div>
+</template>
+<config>
+{
+  navigationBarTitleText: '测试',
+}
+</config>
+<script>
+import wepy from '@wepy/core'
+import store from '@/store'
+import { mapGetters } from '@wepy/x'
+
+
+
+wepy.page({
+  store,
+  computed: {
+    // 用户信息
+    ...mapGetters(['user','isLoggedIn'])
+  },
+  onLoad() {
+    //在控制台输出user
+    console.log(this.user.name)
+    // console.log(this.$store.state.users)
+
+  }
+})
+</script>

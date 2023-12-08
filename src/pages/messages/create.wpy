@@ -1,0 +1,89 @@
+<template>
+  <div class="create-message">
+    <h1>创建私信</h1>
+    <textarea v-model="form.messageContent" placeholder="请输入私信内容"></textarea>
+    <button type="submit" @tap="sendMessage">发送</button>
+  </div>
+</template>
+<config>
+  {
+    navigationBarTitleText: '发送私信',
+  }
+</config>
+<script>
+  import wepy from '@wepy/core'
+  import store from '@/store'
+  import { mapGetters } from '@wepy/x'
+  import { createMessage } from '@/api/message'
+
+  wepy.page({
+    store,
+    computed: {
+      // 用户信息
+      ...mapGetters(['isLoggedIn','user'])
+    },
+    data: {
+      //表单数据
+      form: {},
+      //发信人id为当前登录用户id,从store中获取
+      sender_id: null,
+      //收信人id为当前页面传递过来的用户id,从options中获取
+      receiver_id: null,
+    },
+    onLoad(options) {
+      if (!this.isLoggedIn) {
+        this.navigateTo('/pages/auth/login')
+      }
+      this.sender_id = this.user.id
+      this.receiver_id = options.id
+    },
+    methods: {
+      showToast(title, icon = 'none', duration = 2000) {
+        wx.showToast({ title, icon, duration })
+      },
+      navigateTo(url) {
+        wx.navigateTo({ url })
+      },
+      async sendMessage() {
+        if (!this.form.messageContent) {
+          this.showToast('请填写内容')
+          return
+        }
+
+        try {
+          await createMessage({
+            content: this.form.messageContent,
+            sender_id: this.sender_id,
+            receiver_id: this.receiver_id,
+          })
+          this.showToast('发送成功', 'success')
+          this.navigateTo('/pages/users/show?id=' + this.receiver_id)
+        } catch (error) {
+          this.showToast('发送失败')
+        }
+      }
+    }
+  })
+</script>
+<style lang="less">
+  .create-message {
+    padding: 20px;
+    textarea {
+      width: 100%;
+      height: 200px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    button {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      background-color: #3cc51f;
+      color: #fff;
+      border-radius: 5px;
+    }
+  }
+</style>

@@ -1,0 +1,78 @@
+<style lang="less">
+.page{
+    background-color: #FFFFFF;
+}
+.avatar-wrap {
+  position: relative;
+  margin-right: 10px;
+}
+.avatar {
+  width: 50px;
+  height: 50px;
+  display: block;
+  border-radius: 50%;
+}
+.topic-title {
+  padding: 15px;
+}
+</style>
+<template>
+  <div class="page">
+    <div class="page__bd">
+      <div class="weui-cells weui-cells_after-title">
+        <a class="weui-cell">
+          <!-- <div class="weui-cell__hd avatar-wrap">
+            <image class="avatar" :src="topic.user.avatar"/>
+          </div> -->
+          <div class="weui-cell__bd">
+            <div>{{ message.sender.name }}</div>
+            <div class="page__desc">{{ message.sender.introduction }}</div>
+          </div>
+        </a>
+      </div>
+      <div class="topic-title">
+        <div class="page__title">{{ message.content }}</div>
+        <div class="weui-media-box__info topic-info">
+          <!-- <div class="weui-media-box__info__meta">{{ message.category.name }} • </div> -->
+          <div class="weui-media-box__info__meta"><datetime-diff :datetime="message.updated_at"></datetime-diff> • </div>
+          <!-- <div class="weui-media-box__info__meta">{{ message.reply_count }} 次回复</div> -->
+        </div>
+      </div>
+      <div class="weui-article">
+        <rich-text :nodes="message.content"></rich-text>
+      </div>
+    </div>
+  </div>
+</template>
+<config>
+  {
+    navigationBarTitleText: '私信详情',
+    usingComponents: {
+      "datetime-diff": "~@/components/datetime-diff"
+    }
+  }
+</config>
+<script>
+  import wepy from '@wepy/core'
+  import { show } from '@/api/message'
+
+  wepy.page({
+    data: {
+      // 话题数据
+      message: null
+    },
+    methods: {
+      // 获取话题数据
+      async loadMessage(id) {
+        const messageResponse = await show(id, {
+          include: 'user,category'
+        })
+
+        this.message = messageResponse.data
+      }
+    },
+    onLoad(options) {
+      this.loadMessage(options.id)
+    }
+  })
+</script>

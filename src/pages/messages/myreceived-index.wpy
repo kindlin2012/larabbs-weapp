@@ -1,0 +1,84 @@
+<template>
+  <div class="page__bd">
+    <message-list :messages="messages" :noMoreData="noMoreData"></message-list>
+  </div>
+</template>
+<config>
+{
+"navigationBarTitleText": "我发送的私信",
+"enablePullDownRefresh": true,
+usingComponents: {
+"message-list": "~@/components/message-list",
+
+}
+
+}
+</config>
+<script>
+import wepy from '@wepy/core';
+import { getCurUserReceived } from '@/api/message';
+
+wepy.page({
+  data: {
+    // 话题数据
+    messages: [],
+    // 当前分页
+    page: 1,
+    // 是否还有更多数据
+    noMoreData: false,
+    // 是否在加载中
+    isLoading: false
+  },
+  async onLoad() {
+    this.loadMessages();
+  },
+  async onPullDownRefresh() {
+    this.page = 1;
+    this.noMoreData = false;
+    await this.loadMessages(true);
+    wx.stopPullDownRefresh();
+  },
+  async onReachBottom() {
+    // 如果没有更多内容，直接返回
+    if (this.noMoreData || this.isLoading) {
+      return;
+    }
+
+    this.isLoading = true;
+    this.page += 1;
+
+    await this.loadMessages();
+
+    this.isLoading = false;
+  },
+  methods: {
+    // 获取私信数据
+    async loadMessages(reset = false) {
+      if (reset) {
+        this.page = 1;
+      }
+
+      // 请求私信列表接口
+      let params = {
+        page: this.page,
+        include: 'sender,receiver'
+      };
+      const MessagesResponse = await getCurUserReceived(params);
+
+      // 将数据合并到 this.messages
+      this.messages = reset
+        ? MessagesResponse.data.data
+        : this.messages.concat(MessagesResponse.data.data);
+
+      const pagination = MessagesResponse.data.meta;
+
+      // 根据分页设置是否还有更多数据
+      if (pagination.current_page === pagination.last_page) {
+        this.noMoreData = true;
+      }
+    }
+  }
+});
+</script>
+
+

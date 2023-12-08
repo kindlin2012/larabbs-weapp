@@ -29,7 +29,7 @@ const actions = {
   async login ({ dispatch, commit }, params = {}) {
     const loginData = await wepy.wx.login()
     params.code = loginData.code
-    console.log('参数是:',params)
+    // console.log('参数是:',params)
 
     const authResponse = await login(params)
 
